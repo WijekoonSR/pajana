@@ -1,4 +1,5 @@
 import Image from "next/image";
+import type { CSSProperties } from "react";
 import type { MediaAsset } from "@/lib/api/types";
 
 /**
@@ -10,12 +11,19 @@ export function CmsImage({
   sizes,
   priority,
   className,
+  focus,
+  mobileFocus,
 }: {
   asset: MediaAsset;
   sizes: string;
   priority?: boolean;
   className?: string;
+  /** Focal point in percent; with object-cover, this spot stays in view. */
+  focus?: { x: number; y: number };
+  /** Focal point below the md breakpoint (phones); defaults to `focus`. */
+  mobileFocus?: { x: number; y: number };
 }) {
+  const m = mobileFocus ?? focus;
   return (
     <Image
       src={asset.url}
@@ -25,7 +33,12 @@ export function CmsImage({
       sizes={sizes}
       priority={priority}
       unoptimized={asset.url.endsWith(".svg")}
-      className={className}
+      className={focus ? `${className ?? ""} [object-position:var(--focus-m)] md:[object-position:var(--focus)]` : className}
+      style={
+        focus && m
+          ? ({ "--focus": `${focus.x}% ${focus.y}%`, "--focus-m": `${m.x}% ${m.y}%` } as CSSProperties)
+          : undefined
+      }
     />
   );
 }

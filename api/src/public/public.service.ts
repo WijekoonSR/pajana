@@ -58,6 +58,10 @@ interface StoredBanner {
   width: number;
   height: number;
   alt: unknown;
+  focusX?: number;
+  focusY?: number;
+  mobileFocusX?: number;
+  mobileFocusY?: number;
 }
 
 interface StoredChannel {
@@ -133,6 +137,10 @@ export class PublicService {
         alt: localize(b.alt, locale),
         width: b.width,
         height: b.height,
+        focusX: b.focusX ?? 50,
+        focusY: b.focusY ?? 50,
+        mobileFocusX: b.mobileFocusX ?? b.focusX ?? 50,
+        mobileFocusY: b.mobileFocusY ?? b.focusY ?? 50,
       })),
       homeIntro: localize(s.homeIntro, locale),
       highlights: (s.highlights as unknown as StoredHighlight[]).map((h) => ({

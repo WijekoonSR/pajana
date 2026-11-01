@@ -40,7 +40,16 @@ export class SettingsService {
         logoPath: dto.logoPath || null,
         heroBanners: dto.heroBanners.map((b) => {
           const a = byPath.get(b.path)!;
-          return { path: a.path, width: a.width, height: a.height, alt: loc(b.alt) };
+          return {
+            path: a.path,
+            width: a.width,
+            height: a.height,
+            alt: loc(b.alt),
+            focusX: b.focusX ?? 50,
+            focusY: b.focusY ?? 50,
+            mobileFocusX: b.mobileFocusX ?? b.focusX ?? 50,
+            mobileFocusY: b.mobileFocusY ?? b.focusY ?? 50,
+          };
         }),
         homeIntro: loc(dto.homeIntro),
         highlights: dto.highlights.map((h) => ({ title: loc(h.title), body: loc(h.body) })),

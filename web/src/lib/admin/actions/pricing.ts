@@ -89,7 +89,7 @@ export async function saveFootnote(_: ActionState, fd: FormData) {
       method: "PUT",
       body: {
         ...settings,
-        heroBanners: settings.heroBanners.map((b) => ({ path: b.path, alt: b.alt })),
+        heroBanners: settings.heroBanners.map((b) => ({ path: b.path, alt: b.alt, focusX: b.focusX, focusY: b.focusY, mobileFocusX: b.mobileFocusX, mobileFocusY: b.mobileFocusY })),
         pricingFootnote: localizedFrom(fd, "footnote"),
       },
     });

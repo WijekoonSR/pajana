@@ -131,6 +131,119 @@ function ImageChoice({
   );
 }
 
+type Point = { x: number; y: number };
+type FocusPatch = { focusX: number; focusY: number } | { mobileFocusX: number; mobileFocusY: number };
+
+/**
+ * Click the important part of a banner (usually a face), separately for wide
+ * desktop screens and tall phone screens. The public site crops around the
+ * matching point, so it stays visible on both.
+ */
+function FocusPicker({
+  image,
+  desktop,
+  phone,
+  onChange,
+}: {
+  image: LibraryImage | undefined;
+  desktop: Point;
+  phone: Point;
+  onChange: (patch: FocusPatch) => void;
+}) {
+  const [mode, setMode] = useState<"desktop" | "phone">("desktop");
+  if (!image) return null;
+  const active = mode === "desktop" ? desktop : phone;
+
+  const pick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const r = e.currentTarget.getBoundingClientRect();
+    const pct = (v: number) => Math.round(Math.min(100, Math.max(0, v * 100)));
+    const x = pct((e.clientX - r.left) / r.width);
+    const y = pct((e.clientY - r.top) / r.height);
+    onChange(mode === "desktop" ? { focusX: x, focusY: y } : { mobileFocusX: x, mobileFocusY: y });
+  };
+
+  const dot = (p: Point, which: "desktop" | "phone") => (
+    <span
+      aria-hidden="true"
+      className={`pointer-events-none absolute grid size-6 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border-2 border-white text-[10px] font-bold text-white shadow-[0_0_0_2px_rgba(0,0,0,0.35)] ${
+        which === mode ? "z-10 bg-primary" : "bg-night/60 opacity-70"
+      }`}
+      style={{ left: `${p.x}%`, top: `${p.y}%` }}
+    >
+      {which === "desktop" ? "D" : "P"}
+    </span>
+  );
+
+  const preview = (which: "desktop" | "phone", className: string, title: string) => {
+    const p = which === "desktop" ? desktop : phone;
+    return (
+      <button
+        type="button"
+        onClick={() => setMode(which)}
+        aria-pressed={mode === which}
+        className={`space-y-1 text-left ${mode === which ? "" : "opacity-60 hover:opacity-100"}`}
+      >
+        <span className={`block overflow-hidden rounded-lg bg-surface-2 ring-2 ${mode === which ? "ring-primary" : "ring-transparent"} ${className}`}>
+          <Image
+            src={image.url}
+            alt=""
+            width={image.width}
+            height={image.height}
+            unoptimized
+            className="h-full w-full object-cover"
+            style={{ objectPosition: `${p.x}% ${p.y}%` }}
+          />
+        </span>
+        <span className="block text-[11px] text-muted">{title}</span>
+      </button>
+    );
+  };
+
+  return (
+    <div>
+      <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
+        <p className={label}>Focal point</p>
+        <div role="tablist" className="inline-flex rounded-full bg-surface-2 p-1 text-xs font-semibold">
+          {(["desktop", "phone"] as const).map((m) => (
+            <button
+              key={m}
+              type="button"
+              role="tab"
+              aria-selected={mode === m}
+              onClick={() => setMode(m)}
+              className={`rounded-full px-3 py-1 ${mode === m ? "bg-white text-primary shadow-sm" : "text-muted"}`}
+            >
+              {m === "desktop" ? "Desktop" : "Phone"}
+            </button>
+          ))}
+        </div>
+      </div>
+      <div className="grid gap-3 md:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
+        <div className="space-y-1">
+          <button
+            type="button"
+            onClick={pick}
+            aria-label={`Click the part of the image that must stay visible on ${mode}`}
+            className="relative block w-full cursor-crosshair overflow-hidden rounded-lg"
+          >
+            <Image src={image.url} alt="" width={image.width} height={image.height} unoptimized className="block h-auto w-full" />
+            {dot(mode === "desktop" ? phone : desktop, mode === "desktop" ? "phone" : "desktop")}
+            {dot(active, mode)}
+          </button>
+          <p className="text-[11px] text-muted">
+            Setting the <strong>{mode === "desktop" ? "desktop" : "phone"}</strong> point: click the part that must stay
+            visible, usually the face.
+          </p>
+        </div>
+        <div className="grid grid-cols-[2fr_1fr] items-start gap-3 md:grid-cols-1">
+          {preview("desktop", "aspect-[16/7]", "Desktop")}
+          {preview("phone", "aspect-[3/4] max-w-40", "Phone")}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function SettingsEditor({ initial, library: initialLibrary }: { initial: Settings; library: LibraryImage[] }) {
   const [s, setS] = useState(initial);
   const [library, setLibrary] = useState(initialLibrary);
@@ -139,7 +252,14 @@ export function SettingsEditor({ initial, library: initialLibrary }: { initial: 
 
   const payload = {
     ...s,
-    heroBanners: s.heroBanners.map((b) => ({ path: b.path, alt: b.alt })),
+    heroBanners: s.heroBanners.map(({ path, alt, focusX, focusY, mobileFocusX, mobileFocusY }) => ({
+      path,
+      alt,
+      focusX,
+      focusY,
+      mobileFocusX,
+      mobileFocusY,
+    })),
     mapUrl: s.mapUrl?.trim() || null,
   };
 
@@ -194,6 +314,12 @@ export function SettingsEditor({ initial, library: initialLibrary }: { initial: 
                     onRemove={() => set("heroBanners", s.heroBanners.filter((_, j) => j !== i))}
                   />
                 </div>
+                <FocusPicker
+                  image={library.find((img) => img.path === b.path)}
+                  desktop={{ x: b.focusX ?? 50, y: b.focusY ?? 50 }}
+                  phone={{ x: b.mobileFocusX ?? b.focusX ?? 50, y: b.mobileFocusY ?? b.focusY ?? 50 }}
+                  onChange={(patch) => set("heroBanners", s.heroBanners.map((x, j) => (j === i ? { ...x, ...patch } : x)))}
+                />
                 <LocalizedControl
                   label="Alt text"
                   compact

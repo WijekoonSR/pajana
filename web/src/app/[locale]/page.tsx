@@ -39,6 +39,8 @@ export default async function HomePage() {
             asset={mainBanner}
             sizes="100vw"
             priority
+            focus={{ x: mainBanner.focusX, y: mainBanner.focusY }}
+            mobileFocus={{ x: mainBanner.mobileFocusX, y: mainBanner.mobileFocusY }}
             className="absolute inset-0 size-full object-cover opacity-70"
           />
         )}
@@ -76,6 +78,8 @@ export default async function HomePage() {
                 <CmsImage
                   asset={banner}
                   sizes="(min-width: 768px) 560px, 85vw"
+                  focus={{ x: banner.focusX, y: banner.focusY }}
+                  mobileFocus={{ x: banner.mobileFocusX, y: banner.mobileFocusY }}
                   className="aspect-[16/9] w-full rounded-2xl border border-border object-cover"
                 />
               </li>

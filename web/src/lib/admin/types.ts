@@ -204,7 +204,7 @@ export interface Settings {
   siteTitle: Localized;
   tagline: Localized;
   logoPath: string | null;
-  heroBanners: { path: string; width: number; height: number; alt: Localized }[];
+  heroBanners: { path: string; width: number; height: number; alt: Localized; focusX?: number; focusY?: number; mobileFocusX?: number; mobileFocusY?: number }[];
   homeIntro: Localized;
   highlights: { title: Localized; body: Localized }[];
   businessHours: Localized;

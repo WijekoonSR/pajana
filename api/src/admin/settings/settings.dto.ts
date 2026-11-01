@@ -4,10 +4,13 @@ import {
   IsArray,
   IsBoolean,
   IsIn,
+  IsInt,
   IsOptional,
   IsString,
   Matches,
+  Max,
   MaxLength,
+  Min,
   ValidateNested,
 } from 'class-validator';
 import { LocalizedDto, LocalizedType } from '../admin.dto.js';
@@ -25,6 +28,32 @@ export class BannerDto {
   @ValidateNested()
   @LocalizedType()
   alt: LocalizedDto;
+
+  /** Focal point in percent (0 = left/top, 100 = right/bottom); crops keep this spot in view. */
+  @IsOptional()
+  @IsInt()
+  @Min(0)
+  @Max(100)
+  focusX?: number;
+
+  @IsOptional()
+  @IsInt()
+  @Min(0)
+  @Max(100)
+  focusY?: number;
+
+  /** Separate focal point for phones (portrait crop); falls back to the desktop one. */
+  @IsOptional()
+  @IsInt()
+  @Min(0)
+  @Max(100)
+  mobileFocusX?: number;
+
+  @IsOptional()
+  @IsInt()
+  @Min(0)
+  @Max(100)
+  mobileFocusY?: number;
 }
 
 export class HighlightDto {

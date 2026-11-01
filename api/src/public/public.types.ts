@@ -39,6 +39,15 @@ export interface MediaAsset {
   height: number;
 }
 
+/** Banner image plus the focal points (percent) that crops must keep in view. */
+export interface HeroBanner extends MediaAsset {
+  focusX: number;
+  focusY: number;
+  /** Used on phones (below 768px). */
+  mobileFocusX: number;
+  mobileFocusY: number;
+}
+
 export interface Highlight {
   title: string;
   body: string;
@@ -48,7 +57,7 @@ export interface SiteSettings {
   siteTitle: string;
   tagline: string;
   logoUrl: string | null;
-  heroBanners: MediaAsset[];
+  heroBanners: HeroBanner[];
   homeIntro: string;
   highlights: Highlight[];
   businessHours: string;
