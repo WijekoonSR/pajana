@@ -66,7 +66,8 @@
     "seeAllCast": "See all cast",
     "highlights": "Why choose us",
     "ctaTitle": "Ready to book?",
-    "ctaBody": "Contact us by phone or message. Our staff will be happy to help in English."
+    "ctaBody": "Contact us by phone or message. Our staff will be happy to help in English.",
+    "showSlide": "Show banner {index} of {count}"
   },
   "system": {
     "title": "Prices",

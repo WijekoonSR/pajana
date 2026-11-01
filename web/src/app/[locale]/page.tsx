@@ -5,7 +5,7 @@ import { getPage, getProfiles, getSchedule, getSettings } from "@/lib/api/client
 import { ProfileCard } from "@/components/cast/profile-card";
 import { CardGrid } from "@/components/ui/card-grid";
 import { SlotTime } from "@/components/schedule/slot-time";
-import { CmsImage } from "@/components/ui/cms-image";
+import { HeroSlideshow } from "@/components/home/hero-slideshow";
 import { ContactButtons } from "@/components/ui/contact-buttons";
 import { SectionTitle } from "@/components/ui/page-header";
 import { BrandMark } from "@/components/layout/brand-mark";
@@ -28,65 +28,38 @@ export default async function HomePage() {
   const today = schedule.days[0];
   const working = today?.slots.filter((s) => s.status === "scheduled") ?? [];
   const featured = profiles.slice(0, 4);
-  const [mainBanner, ...moreBanners] = settings.heroBanners;
 
   return (
     <>
       {/* Hero */}
       <section className="relative overflow-hidden bg-night">
-        {mainBanner && (
-          <CmsImage
-            asset={mainBanner}
-            sizes="100vw"
-            priority
-            focus={{ x: mainBanner.focusX, y: mainBanner.focusY }}
-            mobileFocus={{ x: mainBanner.mobileFocusX, y: mainBanner.mobileFocusY }}
-            className="absolute inset-0 size-full object-cover opacity-70"
-          />
-        )}
-        <div className="absolute inset-0 bg-gradient-to-t from-night via-night/40 to-transparent" />
-        <div className="relative mx-auto flex min-h-[70svh] max-w-6xl flex-col items-center justify-end px-4 pb-14 pt-24 text-center md:min-h-[560px]">
-          <div className="rounded-3xl bg-surface/90 px-6 py-5 shadow-2xl shadow-primary/30 backdrop-blur">
-            <h1 className="sr-only">{settings.siteTitle}</h1>
-            <BrandMark title={settings.siteTitle} size="lg" />
+        <HeroSlideshow banners={settings.heroBanners}>
+          <div className="absolute inset-0 bg-gradient-to-t from-night via-night/40 to-transparent" />
+          <div className="relative mx-auto flex min-h-[70svh] max-w-6xl flex-col items-center justify-end px-4 pb-14 pt-24 text-center md:min-h-[clamp(560px,calc(100svh-16rem),700px)]">
+            <div className="rounded-3xl bg-surface/90 px-6 py-5 shadow-2xl shadow-primary/30 backdrop-blur">
+              <h1 className="sr-only">{settings.siteTitle}</h1>
+              <BrandMark title={settings.siteTitle} size="lg" />
+            </div>
+            <p className="mt-5 max-w-xl text-base font-medium text-white drop-shadow md:text-lg">
+              {settings.tagline}
+            </p>
+            <div className="mt-6 flex flex-wrap justify-center gap-3">
+              <Link
+                href="/schedule"
+                className="bg-brand-gradient rounded-full px-6 py-3 text-sm font-bold text-white shadow-lg shadow-primary/40 transition-transform hover:-translate-y-0.5"
+              >
+                {t("home.todaySchedule")}
+              </Link>
+              <Link
+                href="/cast"
+                className="rounded-full border-2 border-white/80 px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-white hover:text-primary"
+              >
+                {t("nav.cast.sub")}
+              </Link>
+            </div>
           </div>
-          <p className="mt-5 max-w-xl text-base font-medium text-white drop-shadow md:text-lg">
-            {settings.tagline}
-          </p>
-          <div className="mt-6 flex flex-wrap justify-center gap-3">
-            <Link
-              href="/schedule"
-              className="bg-brand-gradient rounded-full px-6 py-3 text-sm font-bold text-white shadow-lg shadow-primary/40 transition-transform hover:-translate-y-0.5"
-            >
-              {t("home.todaySchedule")}
-            </Link>
-            <Link
-              href="/cast"
-              className="rounded-full border-2 border-white/80 px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-white hover:text-primary"
-            >
-              {t("nav.cast.sub")}
-            </Link>
-          </div>
-        </div>
+        </HeroSlideshow>
       </section>
-
-      {moreBanners.length > 0 && (
-        <div className="mx-auto max-w-6xl px-4 pt-6">
-          <ul className="flex snap-x snap-mandatory gap-3 overflow-x-auto pb-2 [scrollbar-width:thin]">
-            {moreBanners.map((banner) => (
-              <li key={banner.url} className="w-[85%] shrink-0 snap-center md:w-[calc(50%-0.375rem)]">
-                <CmsImage
-                  asset={banner}
-                  sizes="(min-width: 768px) 560px, 85vw"
-                  focus={{ x: banner.focusX, y: banner.focusY }}
-                  mobileFocus={{ x: banner.mobileFocusX, y: banner.mobileFocusY }}
-                  className="aspect-[16/9] w-full rounded-2xl border border-border object-cover"
-                />
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
 
       {/* Intro */}
       {settings.homeIntro && (

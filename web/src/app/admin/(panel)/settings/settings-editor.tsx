@@ -291,12 +291,20 @@ export function SettingsEditor({ initial, library: initialLibrary }: { initial: 
         </div>
       </Section>
 
-      <Section id="home" title="Home page" description="Hero banners, introduction and highlight boxes.">
+      <Section id="home" title="Home page" description="Hero slideshow, introduction and highlight boxes.">
         <div>
-          <p className={label}>Hero banners</p>
+          <p className={label}>Hero slideshow</p>
+          <p className="-mt-1 mb-3 text-xs text-muted">
+            Full-width photos at the top of the home page. With more than one, they fade from one to the next every
+            4 seconds, in this order. Use landscape photos and set a focal point for desktop and phone.
+          </p>
           <div className="space-y-3">
             {s.heroBanners.map((b, i) => (
               <div key={i} className="space-y-3 rounded-xl border border-border/70 p-3">
+                <p className="text-xs font-bold text-ink">
+                  Slide {i + 1}
+                  {i === 0 && <span className="ml-2 font-medium text-muted">Shown first</span>}
+                </p>
                 <div className="flex flex-wrap items-center justify-between gap-3">
                   <div className="min-w-0 flex-1">
                     <ImageChoice
@@ -335,7 +343,7 @@ export function SettingsEditor({ initial, library: initialLibrary }: { initial: 
             onClick={() => set("heroBanners", [...s.heroBanners, { path: library[0]?.path ?? "", width: 0, height: 0, alt: empty() }])}
             className={`${btn.small} mt-3`}
           >
-            + Add banner
+            + Add slide
           </button>
         </div>
         <LocalizedControl label="Introduction" multiline rows={4} value={s.homeIntro} onChange={(v) => set("homeIntro", v)} />

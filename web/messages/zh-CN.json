@@ -66,7 +66,8 @@
     "seeAllCast": "查看全部女孩",
     "highlights": "我们的特色",
     "ctaTitle": "立即预约",
-    "ctaBody": "欢迎通过电话或信息与我们联系，我们将竭诚为您服务。"
+    "ctaBody": "欢迎通过电话或信息与我们联系，我们将竭诚为您服务。",
+    "showSlide": "显示第 {index} 张横幅（共 {count} 张）"
   },
   "system": {
     "title": "价格方案",

@@ -24,7 +24,10 @@ export function BrandMark({
 }) {
   const { text, emoji } = splitTitle(title);
   return (
-    <Link href="/" className="group inline-flex min-w-0 flex-col leading-none">
+    <Link
+      href="/"
+      className="group inline-flex min-w-0 flex-col rounded-lg leading-none outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4"
+    >
       <span className="flex items-center gap-1">
         <span
           className={`text-brand-gradient whitespace-nowrap font-brand font-black tracking-[0.12em] ${
