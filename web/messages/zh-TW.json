@@ -1,0 +1,163 @@
+{
+  "meta": {
+    "defaultDescription": "官方國際網站。"
+  },
+  "nav": {
+    "top": {
+      "title": "TOP",
+      "sub": "首頁"
+    },
+    "system": {
+      "title": "SYSTEM",
+      "sub": "價格方案"
+    },
+    "schedule": {
+      "title": "SCHEDULE",
+      "sub": "出勤表"
+    },
+    "cast": {
+      "title": "CAST",
+      "sub": "女孩介紹"
+    },
+    "access": {
+      "title": "ACCESS",
+      "sub": "服務區域"
+    },
+    "recruit": {
+      "title": "RECRUIT",
+      "sub": "人才招募"
+    },
+    "contact": {
+      "title": "CONTACT",
+      "sub": "聯絡我們"
+    },
+    "menu": "選單",
+    "openMenu": "開啟選單",
+    "closeMenu": "關閉選單",
+    "mainNav": "主要導覽"
+  },
+  "common": {
+    "call": "撥打電話",
+    "sms": "傳送簡訊",
+    "callNow": "立即來電",
+    "contactUs": "聯絡我們",
+    "language": "語言",
+    "skipToContent": "跳至主要內容",
+    "backTo": "返回{page}",
+    "viewAll": "查看全部",
+    "minutes": "{count} 分鐘",
+    "new": "新人",
+    "noImage": "暫無照片"
+  },
+  "footer": {
+    "contact": "聯絡方式",
+    "menu": "選單",
+    "legal": "相關資訊",
+    "privacy": "隱私權政策",
+    "terms": "使用條款",
+    "notices": "重要須知",
+    "adultsOnly": "本網站僅限年滿 18 歲以上之成年人瀏覽。",
+    "rights": "© {year} {site} 版權所有。"
+  },
+  "home": {
+    "todaySchedule": "本日出勤",
+    "seeFullSchedule": "查看完整出勤表",
+    "newFaces": "精選女孩",
+    "seeAllCast": "查看全部女孩",
+    "highlights": "我們的特色",
+    "ctaTitle": "立即預約",
+    "ctaBody": "歡迎透過電話或訊息與我們聯繫，我們將竭誠為您服務。"
+  },
+  "system": {
+    "title": "價格方案",
+    "lead": "所有價格均以日圓標示，除另有註明外皆為含稅價格。",
+    "duration": "時間",
+    "price": "價格",
+    "free": "免費",
+    "empty": "價格資訊即將公布。"
+  },
+  "schedule": {
+    "title": "出勤表",
+    "lead": "所有時間皆以日本時間（JST，UTC+9）顯示。",
+    "daily": "每日",
+    "weekly": "每週",
+    "prevDay": "前一天",
+    "nextDay": "後一天",
+    "prevWeek": "上一週",
+    "nextWeek": "下一週",
+    "today": "今天",
+    "empty": "本日暫無出勤資訊。",
+    "dayOff": "休假",
+    "nextDayShort": "翌日",
+    "nextDayLabel": "（翌日）",
+    "working": "{count, plural, =0 {本日無人出勤} other {# 位出勤}}"
+  },
+  "cast": {
+    "title": "女孩介紹",
+    "lead": "認識我們的女孩，點選個人資料查看詳情與出勤時間。",
+    "empty": "女孩資料即將公布。",
+    "profile": "個人資料",
+    "message": "留言",
+    "schedule": "未來 7 天出勤時間",
+    "gallery": "相簿",
+    "photoOf": "{name} 的第 {index} 張照片",
+    "count": "共 {count} 位",
+    "noMatch": "沒有符合條件的女孩，請放寬篩選條件。",
+    "filters": {
+      "age": "年齡",
+      "height": "身高",
+      "style": "風格",
+      "availability": "出勤",
+      "any": "不限",
+      "anyTime": "不限",
+      "ageRange": "{min}-{max} 歲",
+      "ageOver": "{min} 歲以上",
+      "heightUnder": "{max} 公分以下",
+      "heightRange": "{min}-{max} 公分",
+      "heightOver": "{min} 公分以上",
+      "now": "現在出勤中",
+      "today": "今天",
+      "week": "本週",
+      "clear": "清除篩選"
+    },
+    "openPhoto": "放大檢視第 {index} 張照片（共 {count} 張）",
+    "closePreview": "關閉預覽",
+    "prevPhoto": "上一張照片",
+    "nextPhoto": "下一張照片"
+  },
+  "access": {
+    "title": "服務區域",
+    "area": "服務範圍",
+    "hours": "營業時間",
+    "phone": "電話",
+    "map": "開啟地圖"
+  },
+  "recruit": {
+    "title": "人才招募"
+  },
+  "contact": {
+    "title": "聯絡我們",
+    "lead": "預約及諮詢請透過以下方式與我們聯繫。",
+    "methods": "聯絡方式"
+  },
+  "ageGate": {
+    "notice": "年齡確認",
+    "enter": "我已滿 18 歲 - 進入",
+    "leave": "我未滿 18 歲 - 離開"
+  },
+  "errors": {
+    "notFoundTitle": "找不到頁面",
+    "notFoundBody": "您要找的頁面不存在或已無法瀏覽。",
+    "goHome": "返回首頁",
+    "errorTitle": "發生錯誤",
+    "errorBody": "目前無法載入此頁面，請稍後再試。",
+    "retry": "重試",
+    "loading": "載入中..."
+  },
+  "pagination": {
+    "label": "分頁",
+    "previous": "上一頁",
+    "next": "下一頁",
+    "page": "第 {page} 頁"
+  }
+}

@@ -1,0 +1,211 @@
+// Data model for the international site CMS (SRS section 05).
+// Localized fields are JSON objects keyed by locale: { "en": "...", "zh-TW": "...", "zh-CN": "..." }.
+
+generator client {
+  provider            = "prisma-client"
+  output              = "../src/generated/prisma"
+  moduleFormat        = "esm"
+  importFileExtension = "js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum AdminRole {
+  OWNER
+  EDITOR
+}
+
+enum AdminStatus {
+  ACTIVE
+  DISABLED
+}
+
+enum ProfileVisibility {
+  DRAFT
+  PUBLISHED
+  HIDDEN
+  ARCHIVED
+}
+
+enum ScheduleStatus {
+  SCHEDULED
+  DAY_OFF
+  CANCELLED
+}
+
+enum PageStatus {
+  DRAFT
+  PUBLISHED
+}
+
+model AdminUser {
+  id           String      @id @default(uuid())
+  // Login name or email (SRS: "login/email"); stored lowercase.
+  login        String      @unique
+  passwordHash String
+  role         AdminRole   @default(EDITOR)
+  status       AdminStatus @default(ACTIVE)
+  lastLoginAt  DateTime?
+  // Failed-login mitigation (CMS-01): lock after repeated failures.
+  failedLogins Int         @default(0)
+  lockedUntil  DateTime?
+  createdAt    DateTime    @default(now())
+
+  editedPages  ContentPage[]
+  auditEntries AuditEntry[]
+  sessions     AdminSession[]
+  uploads      MediaAsset[]
+}
+
+// Opaque bearer sessions; only a SHA-256 of the token is stored.
+model AdminSession {
+  id        String   @id @default(uuid())
+  tokenHash String   @unique
+  userId    String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  user AdminUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+// Media library (CMS-07). Files live under uploads/<path>; uploads are
+// re-encoded server side, which also strips EXIF/location metadata.
+model MediaAsset {
+  id           String   @id @default(uuid())
+  path         String   @unique
+  width        Int
+  height       Int
+  mimeType     String
+  sizeBytes    Int
+  originalName String
+  uploadedById String?
+  createdAt    DateTime @default(now())
+
+  uploadedBy AdminUser? @relation(fields: [uploadedById], references: [id], onDelete: SetNull)
+}
+
+model SiteSettings {
+  id              Int      @id @default(1)
+  siteTitle       Json
+  tagline         Json
+  logoPath        String?
+  heroBanners     Json // [{ path, width, height, alt: Localized }]
+  homeIntro       Json
+  highlights      Json // [{ title: Localized, body: Localized }]
+  businessHours   Json
+  serviceArea     Json
+  mapUrl          String?
+  contactChannels Json // [{ type, label: Localized, value, href }]
+  socialLinks     Json // [{ label, url }]
+  navigation      Json // [{ key, visible }]
+  ageGate         Json // { title, body, enterLabel, leaveLabel: Localized, leaveUrl }
+  pricingFootnote Json
+  updatedAt       DateTime @updatedAt
+}
+
+model Profile {
+  id          String            @id @default(uuid())
+  slug        String            @unique
+  displayName Json
+  attributes  Json // [{ label: Localized, value: Localized }]
+  bio         Json
+  comment     Json
+  sortOrder   Int               @default(0)
+  visibility  ProfileVisibility @default(DRAFT)
+  isNew       Boolean           @default(false)
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  media    ProfileMedia[]
+  schedule ScheduleSlot[]
+}
+
+model ProfileMedia {
+  id            String  @id @default(uuid())
+  profileId     String
+  path          String
+  width         Int
+  height        Int
+  altText       Json
+  sortOrder     Int     @default(0)
+  isPrimary     Boolean @default(false)
+
+  profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  @@index([profileId])
+}
+
+model ScheduleSlot {
+  id         String         @id @default(uuid())
+  profileId  String
+  startAt    DateTime       @db.Timestamptz(3)
+  endAt      DateTime       @db.Timestamptz(3)
+  status     ScheduleStatus @default(SCHEDULED)
+  publicNote Json
+  createdAt  DateTime       @default(now())
+
+  profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  @@index([startAt])
+  @@index([profileId])
+}
+
+model PricingCategory {
+  id        String  @id @default(uuid())
+  title     Json
+  note      Json
+  sortOrder Int     @default(0)
+  published Boolean @default(true)
+
+  entries PricingEntry[]
+}
+
+model PricingEntry {
+  id              String  @id @default(uuid())
+  categoryId      String
+  serviceLabel    Json
+  durationMinutes Int?
+  amount          Int
+  currency        String  @default("JPY")
+  description     Json
+  published       Boolean @default(true)
+  sortOrder       Int     @default(0)
+
+  category PricingCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@index([categoryId])
+}
+
+model ContentPage {
+  id              String     @id @default(uuid())
+  slug            String
+  locale          String
+  title           String
+  body            String
+  seoTitle        String
+  metaDescription String
+  status          PageStatus @default(DRAFT)
+  lastEditedById  String?
+  updatedAt       DateTime   @updatedAt
+
+  lastEditedBy AdminUser? @relation(fields: [lastEditedById], references: [id], onDelete: SetNull)
+
+  @@unique([slug, locale])
+}
+
+model AuditEntry {
+  id         String   @id @default(uuid())
+  actorId    String?
+  action     String
+  objectType String
+  objectId   String
+  occurredAt DateTime @default(now())
+
+  actor AdminUser? @relation(fields: [actorId], references: [id], onDelete: SetNull)
+
+  @@index([occurredAt])
+}

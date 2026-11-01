@@ -1,0 +1,163 @@
+{
+  "meta": {
+    "defaultDescription": "Official international website."
+  },
+  "nav": {
+    "top": {
+      "title": "TOP",
+      "sub": "Home"
+    },
+    "system": {
+      "title": "SYSTEM",
+      "sub": "Prices"
+    },
+    "schedule": {
+      "title": "SCHEDULE",
+      "sub": "Who's in"
+    },
+    "cast": {
+      "title": "CAST",
+      "sub": "Our ladies"
+    },
+    "access": {
+      "title": "ACCESS",
+      "sub": "Area & hours"
+    },
+    "recruit": {
+      "title": "RECRUIT",
+      "sub": "Join us"
+    },
+    "contact": {
+      "title": "CONTACT",
+      "sub": "Get in touch"
+    },
+    "menu": "Menu",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "mainNav": "Main navigation"
+  },
+  "common": {
+    "call": "Call",
+    "sms": "SMS",
+    "callNow": "Call now",
+    "contactUs": "Contact us",
+    "language": "Language",
+    "skipToContent": "Skip to content",
+    "backTo": "Back to {page}",
+    "viewAll": "View all",
+    "minutes": "{count} min",
+    "new": "NEW",
+    "noImage": "No photo"
+  },
+  "footer": {
+    "contact": "Contact",
+    "menu": "Menu",
+    "legal": "Information",
+    "privacy": "Privacy policy",
+    "terms": "Terms of use",
+    "notices": "Notices",
+    "adultsOnly": "This website is intended for adults aged 18 and over only.",
+    "rights": "© {year} {site}. All rights reserved."
+  },
+  "home": {
+    "todaySchedule": "Today's schedule",
+    "seeFullSchedule": "See the full schedule",
+    "newFaces": "Featured cast",
+    "seeAllCast": "See all cast",
+    "highlights": "Why choose us",
+    "ctaTitle": "Ready to book?",
+    "ctaBody": "Contact us by phone or message. Our staff will be happy to help in English."
+  },
+  "system": {
+    "title": "Prices",
+    "lead": "All prices are listed in Japanese yen and include tax unless otherwise noted.",
+    "duration": "Duration",
+    "price": "Price",
+    "free": "Free",
+    "empty": "Price information will be available soon."
+  },
+  "schedule": {
+    "title": "Schedule",
+    "lead": "All times are shown in Japan time (JST, UTC+9).",
+    "daily": "Daily",
+    "weekly": "Weekly",
+    "prevDay": "Previous day",
+    "nextDay": "Next day",
+    "prevWeek": "Previous week",
+    "nextWeek": "Next week",
+    "today": "Today",
+    "empty": "No schedule available for this day.",
+    "dayOff": "Day off",
+    "nextDayShort": "+1",
+    "nextDayLabel": "(next day)",
+    "working": "{count, plural, =0 {No one working} one {# working} other {# working}}"
+  },
+  "cast": {
+    "title": "Cast",
+    "lead": "Meet our ladies. Tap a profile for details and schedule.",
+    "empty": "Cast profiles will be available soon.",
+    "profile": "Profile",
+    "message": "Message",
+    "schedule": "Schedule for the next 7 days",
+    "gallery": "Photo gallery",
+    "photoOf": "Photo {index} of {name}",
+    "count": "{count, plural, one {# cast member} other {# cast members}}",
+    "noMatch": "No cast match these filters. Try widening your search.",
+    "filters": {
+      "age": "AGE",
+      "height": "HEIGHT",
+      "style": "STYLE",
+      "availability": "AVAILABILITY",
+      "any": "Any",
+      "anyTime": "Any time",
+      "ageRange": "{min}-{max}",
+      "ageOver": "{min}+",
+      "heightUnder": "Under {max} cm",
+      "heightRange": "{min}-{max} cm",
+      "heightOver": "{min} cm+",
+      "now": "Working now",
+      "today": "Today",
+      "week": "This week",
+      "clear": "Clear filters"
+    },
+    "openPhoto": "View photo {index} of {count} full size",
+    "closePreview": "Close preview",
+    "prevPhoto": "Previous photo",
+    "nextPhoto": "Next photo"
+  },
+  "access": {
+    "title": "Access",
+    "area": "Service area",
+    "hours": "Business hours",
+    "phone": "Phone",
+    "map": "Open map"
+  },
+  "recruit": {
+    "title": "Recruit"
+  },
+  "contact": {
+    "title": "Contact",
+    "lead": "Reservations and enquiries are accepted by the methods below.",
+    "methods": "How to reach us"
+  },
+  "ageGate": {
+    "notice": "Age verification",
+    "enter": "I am 18 or older - Enter",
+    "leave": "I am under 18 - Leave"
+  },
+  "errors": {
+    "notFoundTitle": "Page not found",
+    "notFoundBody": "The page you are looking for does not exist or is no longer available.",
+    "goHome": "Back to top",
+    "errorTitle": "Something went wrong",
+    "errorBody": "We could not load this page right now. Please try again in a moment.",
+    "retry": "Try again",
+    "loading": "Loading..."
+  },
+  "pagination": {
+    "label": "Pagination",
+    "previous": "Previous page",
+    "next": "Next page",
+    "page": "Page {page}"
+  }
+}
