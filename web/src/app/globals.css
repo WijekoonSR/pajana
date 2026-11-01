@@ -39,6 +39,21 @@ html[lang="zh-CN"] {
   --font-stack-brand: "Songti SC", "Noto Serif SC", "SimSun", serif;
 }
 
+/*
+ * Every dropdown (public site and admin) gets the same chevron with room to
+ * breathe, instead of the browser arrow pressed against the border. Unlayered
+ * so it wins over the padding utilities on shared input classes.
+ */
+select:not([multiple]):not([size]) {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%237a5163' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 8 5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1rem 1rem;
+  padding-right: 2.25rem;
+  text-overflow: ellipsis;
+}
+
 @theme inline {
   --color-bg: var(--bg);
   --color-surface: var(--surface);

@@ -117,32 +117,17 @@ function FilterSelect({
       <label htmlFor={id} className="text-[11px] font-bold tracking-wider text-muted">
         {label}
       </label>
-      <div className="relative">
-        {/* Native arrow is hidden so the chevron looks and sits the same in every browser. */}
-        <select
-          id={id}
-          value={value ?? ""}
-          onChange={(e) => onChange(e.target.value)}
-          className={`h-10 w-full min-w-0 appearance-none truncate rounded-xl border bg-surface pl-3 pr-9 text-sm outline-none transition-colors focus:border-primary ${
-            value ? "border-primary-soft font-bold text-primary" : "border-border text-ink"
-          }`}
-        >
-          <option value="">{anyLabel}</option>
-          {children}
-        </select>
-        <svg
-          aria-hidden="true"
-          viewBox="0 0 20 20"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className={`pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 ${value ? "text-primary" : "text-muted"}`}
-        >
-          <path d="m5 8 5 5 5-5" />
-        </svg>
-      </div>
+      <select
+        id={id}
+        value={value ?? ""}
+        onChange={(e) => onChange(e.target.value)}
+        className={`h-10 w-full min-w-0 truncate rounded-xl border bg-surface px-3 text-sm outline-none transition-colors focus:border-primary ${
+          value ? "border-primary-soft font-bold text-primary" : "border-border text-ink"
+        }`}
+      >
+        <option value="">{anyLabel}</option>
+        {children}
+      </select>
     </div>
   );
 }
